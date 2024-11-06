@@ -1,6 +1,11 @@
+using OnlineLibrary.Core.Application;
+using OnlineLibrary.Infrastructure.Persistence;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+builder.Services.AddApplicationLayer();
+builder.Services.AddPersistenceLayer(builder.Configuration.GetConnectionString("DefaultConnection")!);
 builder.Services.AddControllersWithViews();
 
 var app = builder.Build();

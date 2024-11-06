@@ -1,0 +1,16 @@
+C:\Users\Admin\Desktop\Laza's Projects\OnlineLibrary\OnlineLibrary.Infrastructure.Persistence\bin\Debug\net8.0\OnlineLibrary.Infrastructure.Persistence.deps.json
+C:\Users\Admin\Desktop\Laza's Projects\OnlineLibrary\OnlineLibrary.Infrastructure.Persistence\bin\Debug\net8.0\OnlineLibrary.Infrastructure.Persistence.dll
+C:\Users\Admin\Desktop\Laza's Projects\OnlineLibrary\OnlineLibrary.Infrastructure.Persistence\bin\Debug\net8.0\OnlineLibrary.Infrastructure.Persistence.pdb
+C:\Users\Admin\Desktop\Laza's Projects\OnlineLibrary\OnlineLibrary.Infrastructure.Persistence\bin\Debug\net8.0\OnlineLibrary.Core.Domain.dll
+C:\Users\Admin\Desktop\Laza's Projects\OnlineLibrary\OnlineLibrary.Infrastructure.Persistence\bin\Debug\net8.0\OnlineLibrary.Core.Domain.pdb
+C:\Users\Admin\Desktop\Laza's Projects\OnlineLibrary\OnlineLibrary.Infrastructure.Persistence\obj\Debug\net8.0\OnlineLibrary.Infrastructure.Persistence.csproj.AssemblyReference.cache
+C:\Users\Admin\Desktop\Laza's Projects\OnlineLibrary\OnlineLibrary.Infrastructure.Persistence\obj\Debug\net8.0\OnlineLibrary.Infrastructure.Persistence.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Admin\Desktop\Laza's Projects\OnlineLibrary\OnlineLibrary.Infrastructure.Persistence\obj\Debug\net8.0\OnlineLibrary.Infrastructure.Persistence.AssemblyInfoInputs.cache
+C:\Users\Admin\Desktop\Laza's Projects\OnlineLibrary\OnlineLibrary.Infrastructure.Persistence\obj\Debug\net8.0\OnlineLibrary.Infrastructure.Persistence.AssemblyInfo.cs
+C:\Users\Admin\Desktop\Laza's Projects\OnlineLibrary\OnlineLibrary.Infrastructure.Persistence\obj\Debug\net8.0\OnlineLibrary.Infrastructure.Persistence.csproj.CoreCompileInputs.cache
+C:\Users\Admin\Desktop\Laza's Projects\OnlineLibrary\OnlineLibrary.Infrastructure.Persistence\obj\Debug\net8.0\OnlineLibrary.Infrastructure.Persistence.sourcelink.json
+C:\Users\Admin\Desktop\Laza's Projects\OnlineLibrary\OnlineLibrary.Infrastructure.Persistence\obj\Debug\net8.0\OnlineLi.082FD4E2.Up2Date
+C:\Users\Admin\Desktop\Laza's Projects\OnlineLibrary\OnlineLibrary.Infrastructure.Persistence\obj\Debug\net8.0\OnlineLibrary.Infrastructure.Persistence.dll
+C:\Users\Admin\Desktop\Laza's Projects\OnlineLibrary\OnlineLibrary.Infrastructure.Persistence\obj\Debug\net8.0\refint\OnlineLibrary.Infrastructure.Persistence.dll
+C:\Users\Admin\Desktop\Laza's Projects\OnlineLibrary\OnlineLibrary.Infrastructure.Persistence\obj\Debug\net8.0\OnlineLibrary.Infrastructure.Persistence.pdb
+C:\Users\Admin\Desktop\Laza's Projects\OnlineLibrary\OnlineLibrary.Infrastructure.Persistence\obj\Debug\net8.0\ref\OnlineLibrary.Infrastructure.Persistence.dll
