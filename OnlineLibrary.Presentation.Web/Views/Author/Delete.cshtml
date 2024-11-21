@@ -1,0 +1,26 @@
+@using OnlineLibrary.Core.Domain.Entities
+@model Author
+
+@{
+    ViewData["Title"] = "Delete Author | OL";
+    Layout = "_Layout";
+}
+
+<h2>@ViewData["Title"]</h2>
+
+<br><br>
+
+<div style="width: 300px" class="m-auto card">
+    <p class="text-center card-text fw-bold">Are you sure to delete this author?</p>
+    <p class="text-center card-text">ID: @Model.Id</p>
+    <p class="text-center card-text">Name: @Model.FullName</p>
+
+    <form asp-controller="Author" asp-action="Delete" method="post">
+        <p class="text-center">
+            <button class="btn btn-primary">Delete</button>
+            <a asp-controller="Author" asp-action="Index" class="btn btn-secondary">Go back</a>
+        </p>
+        <input type="hidden" asp-for="Id" value="@Model.Id">
+        <input type="hidden" asp-for="FullName" value="@Model.FullName">
+    </form>
+</div>

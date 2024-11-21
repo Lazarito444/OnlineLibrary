@@ -36,4 +36,34 @@ public class AuthorController : Controller
         await _dbContext.SaveChangesAsync();
         return RedirectToAction(nameof(Index));
     }
+
+    public async Task<IActionResult> Delete(int id)
+    {
+        Author author = (await _dbContext.Set<Author>().FindAsync(id))!;
+        return View(author);
+    }
+
+    public async Task<IActionResult> Edit(int id)
+    {
+        Author author = (await _dbContext.Set<Author>().FindAsync(id))!;
+        return View(author);
+    }
+    
+    [HttpPost]
+    public async Task<IActionResult> Delete(Author author)
+    {
+        _dbContext.Set<Author>().Remove(author);
+        await _dbContext.SaveChangesAsync();
+        return RedirectToAction(nameof(Index));
+    }
+
+    [HttpPost]
+    public async Task<IActionResult> Edit(Author author)
+    {
+        Author currentAuthor = (await _dbContext.Set<Author>().FindAsync(author.Id))!;
+        _dbContext.Set<Author>().Entry(currentAuthor).CurrentValues.SetValues(author);    
+        await _dbContext.SaveChangesAsync();
+        return RedirectToAction(nameof(Index));
+    }
+    
 }
