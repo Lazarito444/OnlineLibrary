@@ -1,3 +1,5 @@
+@using OnlineLibrary.Core.Domain.Entities
+@model User
 @{
     Layout = null;
 }
@@ -16,18 +18,20 @@
         <h6 class="card-subtitle mb-2 text-muted">Online Library Management System</h6>
         <br>
         <br>
-        <div class="input-group mb-3">
-            <span class="input-group-text">Username</span>
-            <input type="text" class="form-control" placeholder="Username" aria-label="Username">
-        </div>
-        <div class="input-group mb-3">
-            <span class="input-group-text">Password</span>
-            <input type="password" class="form-control" placeholder="Password" aria-label="Password">
-        </div>
-        <button class="btn btn-primary">Log In</button>
+        <form asp-controller="Auth" asp-action="Login" method="post">
+            <div class="input-group mb-3">
+                <span class="input-group-text">Email</span>
+                <input asp-for="Email" type="text" class="form-control" placeholder="Email" aria-label="Email">
+            </div>
+            <div class="input-group mb-3">
+                <span class="input-group-text">Password</span>
+                <input asp-for="Password" type="password" class="form-control" placeholder="Password" aria-label="Password">
+            </div>
+            <button class="btn btn-primary">Log In</button>
+        </form>
         <br>
         <br>
-        <p>Don't have an account? <a href="#" class="card-link">Sign up</a></p>
+        <p>Don't have an account? <a asp-controller="Auth" asp-action="Register" class="card-link">Sign up</a></p>
     </div>
 </div>
 </body>

@@ -1,0 +1,22 @@
+@using OnlineLibrary.Core.Domain.Entities
+@model Author
+@{
+    ViewData["Title"] = "Create Author | OL";
+    Layout = "_Layout";
+}
+
+<h2>@ViewData["Title"]</h2>
+
+<form asp-controller="Author" asp-action="Create" method="post">
+    <div class="card">
+        <div class="input-group mb-3">
+            <span class="input-group-text">Full Name</span>
+            <input asp-for="FullName" type="text" class="form-control" placeholder="Full Name" aria-label="Full Name" aria-describedby="basic-addon1">
+        </div>
+    </div>
+    <br>
+    <br>
+    <input type="hidden" asp-for="Id">
+
+    <button class="btn btn-primary">Create</button>
+</form>

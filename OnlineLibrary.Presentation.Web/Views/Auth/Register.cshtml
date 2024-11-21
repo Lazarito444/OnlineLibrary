@@ -1,3 +1,5 @@
+@using OnlineLibrary.Core.Domain.Entities
+@model User
 @{
   Layout = null;
 }
@@ -16,26 +18,29 @@
     <h6 class="card-subtitle mb-2 text-muted">Online Library Management System</h6>
     <br>
     <br>
-    <div class="input-group mb-3">
-      <span class="input-group-text">Full Name</span>
-      <input type="text" class="form-control" placeholder="Full name" aria-label="Full name">
-    </div>
-    <div class="input-group mb-3">
-      <span class="input-group-text">Username</span>
-      <input type="text" class="form-control" placeholder="Username" aria-label="Username">
-    </div>
-    <div class="input-group mb-3">
-      <span class="input-group-text">Email</span>
-      <input type="email" class="form-control" placeholder="Email" aria-label="Email">
-    </div>
-    <div class="input-group mb-3">
-      <span class="input-group-text">Password</span>
-      <input type="password" class="form-control" placeholder="Password" aria-label="Password">
-    </div>
-    <button class="btn btn-primary">Sign up</button>
+    <form asp-controller="Auth" asp-action="Register" method="post">
+      <div class="input-group mb-3">
+        <span class="input-group-text">Full Name</span>
+        <input asp-for="FullName" type="text" class="form-control" placeholder="Full name" aria-label="Full name">
+      </div>
+      <div class="input-group mb-3">
+        <span class="input-group-text">Date of birth</span>
+        <input asp-for="DateOfBirth" type="date" class="form-control" placeholder="Date of birth" aria-label="Date of birth">
+      </div>
+      <div class="input-group mb-3">
+        <span class="input-group-text">Email</span>
+        <input asp-for="Email" type="email" class="form-control" placeholder="Email" aria-label="Email">
+      </div>
+      <div class="input-group mb-3">
+        <span class="input-group-text">Password</span>
+        <input asp-for="Password" type="password" class="form-control" placeholder="Password" aria-label="Password">
+      </div>
+      
+      <button class="btn btn-primary">Sign up</button>
+    </form>
     <br>
     <br>
-    <p>Already have an account? <a href="#" class="card-link">Log In</a></p>
+    <p>Already have an account? <a asp-controller="Auth" asp-action="Login" class="card-link">Log In</a></p>
   </div>
 </div>
 </body>

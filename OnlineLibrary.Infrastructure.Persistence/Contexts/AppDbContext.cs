@@ -15,6 +15,7 @@ public class AppDbContext : DbContext
         base.OnModelCreating(modelBuilder);
 
         // APPLYING CONFIGURATION CLASSES
+        modelBuilder.ApplyConfiguration(new UserConfiguration());
         modelBuilder.ApplyConfiguration(new AuthorConfiguration());
         modelBuilder.ApplyConfiguration(new BookConfiguration());
         modelBuilder.ApplyConfiguration(new PublisherConfiguration());

@@ -1,13 +1,16 @@
 using OnlineLibrary.Core.Application;
 using OnlineLibrary.Infrastructure.Persistence;
+using OnlineLibrary.Presentation.Web.Middleware;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddApplicationLayer();
 builder.Services.AddPersistenceLayer(builder.Configuration.GetConnectionString("DefaultConnection")!);
+builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+builder.Services.AddTransient<ValidateUserSession, ValidateUserSession>();
 builder.Services.AddControllersWithViews();
-
+builder.Services.AddSession();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -20,13 +23,13 @@ if (!app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();
-
+app.UseSession();
 app.UseRouting();
 
 app.UseAuthorization();
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}");
+    pattern: "{controller=Auth}/{action=Login}");
 
 app.Run();

@@ -1,3 +1,5 @@
+@using OnlineLibrary.Core.Domain.Entities
+@model List<Author>
 @{
     Layout = "_Layout";
     ViewData["Title"] = "Authors | Online Library";
@@ -6,60 +8,36 @@
 <div class="container-fluid m-12">
     <h1>Authors</h1>
     <br><br>
-    <div class="card d-inline-block mx-3 my-2" style="width: 16rem;">
-        <img src="https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcRIblDrh-atn2M6VvE9u6CoBSoA2uEGhk821CWtfI1A_HShj55Q" class="card-img-top" height="250" style="object-fit: cover" alt="">
-        <div class="card-body">
-            <h5 class="card-title">Miguel de Cervantes</h5>
-            <a href="#" class="btn btn-primary">See more</a>
-        </div>
-    </div>
-    <div class="card d-inline-block mx-3 my-2" style="width: 16rem;">
-        <img src="https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcRIblDrh-atn2M6VvE9u6CoBSoA2uEGhk821CWtfI1A_HShj55Q" class="card-img-top" height="250" style="object-fit: cover" alt="">
-        <div class="card-body">
-            <h5 class="card-title">Miguel de Cervantes</h5>
-            <a href="#" class="btn btn-primary">See more</a>
-        </div>
-    </div>
-    <div class="card d-inline-block mx-3 my-2" style="width: 16rem;">
-        <img src="https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcRIblDrh-atn2M6VvE9u6CoBSoA2uEGhk821CWtfI1A_HShj55Q" class="card-img-top" height="250" style="object-fit: cover" alt="">
-        <div class="card-body">
-            <h5 class="card-title">Miguel de Cervantes</h5>
-            <a href="#" class="btn btn-primary">See more</a>
-        </div>
-    </div>
-    <div class="card d-inline-block mx-3 my-2" style="width: 16rem;">
-        <img src="https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcRIblDrh-atn2M6VvE9u6CoBSoA2uEGhk821CWtfI1A_HShj55Q" class="card-img-top" height="250" style="object-fit: cover" alt="">
-        <div class="card-body">
-            <h5 class="card-title">Miguel de Cervantes</h5>
-            <a href="#" class="btn btn-primary">See more</a>
-        </div>
-    </div>
-    <div class="card d-inline-block mx-3 my-2" style="width: 16rem;">
-        <img src="https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcRIblDrh-atn2M6VvE9u6CoBSoA2uEGhk821CWtfI1A_HShj55Q" class="card-img-top" height="250" style="object-fit: cover" alt="">
-        <div class="card-body">
-            <h5 class="card-title">Miguel de Cervantes</h5>
-            <a href="#" class="btn btn-primary">See more</a>
-        </div>
-    </div>
-    <div class="card d-inline-block mx-3 my-2" style="width: 16rem;">
-        <img src="https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcRIblDrh-atn2M6VvE9u6CoBSoA2uEGhk821CWtfI1A_HShj55Q" class="card-img-top" height="250" style="object-fit: cover" alt="">
-        <div class="card-body">
-            <h5 class="card-title">Miguel de Cervantes</h5>
-            <a href="#" class="btn btn-primary">See more</a>
-        </div>
-    </div>
-    <div class="card d-inline-block mx-3 my-2" style="width: 16rem;">
-        <img src="https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcRIblDrh-atn2M6VvE9u6CoBSoA2uEGhk821CWtfI1A_HShj55Q" class="card-img-top" height="250" style="object-fit: cover" alt="">
-        <div class="card-body">
-            <h5 class="card-title">Miguel de Cervantes</h5>
-            <a href="#" class="btn btn-primary">See more</a>
-        </div>
-    </div>
-    <div class="card d-inline-block mx-3 my-2" style="width: 16rem;">
-        <img src="https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcRIblDrh-atn2M6VvE9u6CoBSoA2uEGhk821CWtfI1A_HShj55Q" class="card-img-top" height="250" style="object-fit: cover" alt="">
-        <div class="card-body">
-            <h5 class="card-title">Miguel de Cervantes</h5>
-            <a href="#" class="btn btn-primary">See more</a>
-        </div>
-    </div>
+    <a class="btn btn-primary" asp-controller="Author" asp-action="Create">Create Author</a>
+    <br><br>
+    
+    @if (Model.Count == 0)
+    {
+        <h2>No Authors found</h2>
+    }
+    else
+    {
+        <table class="table">
+            <thead>
+            <tr>
+                <th scope="col">ID</th>
+                <th scope="col">Full Name</th>
+                <th scope="col">Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            @foreach (Author author in Model)
+            {
+                <tr>
+                    <td>@author.Id</td>
+                    <td>@author.FullName</td>
+                    <td><a class="btn-warning btn" asp-controller="Author" asp-action="Edit">Edit</a> 
+                        <a class="btn-danger btn" asp-controller="Author" asp-action="Delete">Delete</a>
+                    </td>
+                </tr>
+            }
+            </tbody>
+        </table>
+    }
+    
 </div>
