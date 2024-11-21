@@ -35,4 +35,40 @@ public class PublisherController : Controller
         await _dbContext.SaveChangesAsync();
         return RedirectToAction(nameof(Index));
     }
+
+    public async Task<IActionResult> Edit(int id)
+    {
+        Publisher? currentPublisher = await _dbContext.Set<Publisher>().FindAsync(id);
+
+        if (currentPublisher == null) return RedirectToAction(nameof(Index));
+        
+        return View(currentPublisher);
+    }
+
+    public async Task<IActionResult> Delete(int id)
+    {
+        Publisher? currentPublisher = await _dbContext.Set<Publisher>().FindAsync(id);
+
+        if (currentPublisher == null) return RedirectToAction(nameof(Index));
+        
+        return View(currentPublisher);
+    }
+
+    [HttpPost]
+    public async Task<IActionResult> Delete(Publisher publisher)
+    {
+        _dbContext.Set<Publisher>().Remove(publisher);
+        await _dbContext.SaveChangesAsync();
+        return RedirectToAction(nameof(Index));
+    }
+
+    [HttpPost]
+    public async Task<IActionResult> Edit(Publisher publisher)
+    {
+        Publisher currentPublisher = (await _dbContext.Set<Publisher>().FindAsync(publisher.Id))!;
+        _dbContext.Set<Publisher>().Entry(currentPublisher).CurrentValues.SetValues(publisher);    
+        await _dbContext.SaveChangesAsync();
+        return RedirectToAction(nameof(Index));
+    }
+    
 }

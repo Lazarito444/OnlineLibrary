@@ -31,8 +31,8 @@
                 <tr>
                     <td>@publisher.Id</td>
                     <td>@publisher.Name</td>
-                    <td><a class="btn-warning btn" asp-controller="Publisher" asp-action="Edit">Edit</a> 
-                        <a class="btn-danger btn" asp-controller="Publisher" asp-action="Delete">Delete</a>
+                    <td><a class="btn-warning btn" asp-route-id="@publisher.Id" asp-controller="Publisher" asp-action="Edit">Edit</a> 
+                        <a class="btn-danger btn" asp-route-id="@publisher.Id" asp-controller="Publisher" asp-action="Delete">Delete</a>
                     </td>
                 </tr>
             }

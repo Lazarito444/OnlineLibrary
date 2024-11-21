@@ -1,0 +1,23 @@
+@using OnlineLibrary.Core.Domain.Entities
+@model Publisher
+
+@{
+    ViewData["Title"] = "Edit Publisher | OL";
+    Layout = "_Layout";
+}
+
+<h2>@ViewData["Title"]</h2>
+
+<br><br>
+
+<form asp-controller="Publisher" asp-action="Edit" method="post">
+    <div class="input-group mb-3">
+        <span class="input-group-text">Name</span>
+        <input asp-for="Name" type="text" class="form-control" placeholder="Name" aria-label="Name">
+    </div>
+    <p class="text-center">
+        <button class="btn btn-primary">Edit</button>
+        <a asp-controller="Publisher" asp-action="Index" class="btn btn-secondary">Go back</a>
+    </p>
+    <input type="hidden" asp-for="Id" value="@Model.Id">
+</form>
