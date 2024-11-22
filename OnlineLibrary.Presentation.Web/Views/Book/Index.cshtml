@@ -38,7 +38,7 @@
             <td>@book.Title</td>
             <td>@book.Author.FullName</td>
             <td>@book.Publisher.Name</td>
-            <td>@book.PublishedDate</td>
+            <td>@book.PublishedDate.Day/@book.PublishedDate.Month/@book.PublishedDate.Year</td>
             <td>@book.PagesCount</td>
             <td>@book.BookGenre</td>
             <td><a class="btn-warning btn" asp-route-id="@book.Id" asp-controller="Book" asp-action="Edit">Edit</a>
