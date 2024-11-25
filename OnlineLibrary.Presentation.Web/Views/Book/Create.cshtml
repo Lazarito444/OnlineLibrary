@@ -28,15 +28,18 @@
             <input asp-for="PublishedDate" type="date" class="form-control" placeholder="Published Date" aria-label="Published Date" aria-describedby="basic-addon1">
         </div>
         <div class="mb-3">
-            <select asp-for="BookGenre" asp-items="Html.GetEnumSelectList<BookGenre>()">
+            <label>Book Genre</label>
+            <select class="px-6 py-3 rounded" asp-for="BookGenre" asp-items="Html.GetEnumSelectList<BookGenre>()">
                 <option selected="selected" value="">Please select</option>
             </select>
         </div>
         <div class="mb-3">
-            <select class="custom-select" asp-for="AuthorId" asp-items="ViewBag.ViewAuthors"></select>
+            <label>Author</label>
+            <select class="px-6 py-3 rounded" asp-for="AuthorId" asp-items="ViewBag.ViewAuthors"></select>
         </div>
         <div class="mb-3">
-            <select class="custom-select" asp-for="PublisherId" asp-items="ViewBag.ViewPublishers"></select>
+            <label>Publisher</label>
+            <select class="px-6 py-3 rounded" asp-for="PublisherId" asp-items="ViewBag.ViewPublishers"></select>
         </div>
     </div>
     <br>

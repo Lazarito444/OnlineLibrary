@@ -1,22 +1,23 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using OnlineLibrary.Core.Domain.Entities;
+using OnlineLibrary.Core.Domain.Enums;
 using OnlineLibrary.Infrastructure.Persistence.Contexts;
 using OnlineLibrary.Presentation.Web.Middleware;
 
 namespace OnlineLibrary.Presentation.Web.Controllers;
 
-public class AuthorController : Controller
+public class AdminController : Controller
 {
     private readonly AppDbContext _dbContext;
     private readonly ValidateUserSession _validateUserSession;
 
-    public AuthorController(AppDbContext dbContext, ValidateUserSession validateUserSession)
+    public AdminController(AppDbContext dbContext, ValidateUserSession validateUserSession)
     {
         _dbContext = dbContext;
         _validateUserSession = validateUserSession;
     }
-
+    
     public async Task<IActionResult> Index()
     {
         if (!_validateUserSession.HasUser())
@@ -24,11 +25,10 @@ public class AuthorController : Controller
             return RedirectToRoute(new { Controller = "Auth", Action = "Login"});
         }
         
-        List<Author> authors = await _dbContext.Set<Author>().ToListAsync();
-        return View(authors);
+        List<User> users = await _dbContext.Set<User>().ToListAsync();
+        return View(users);
     }
 
-    
     public IActionResult Create()
     {
         if (!_validateUserSession.HasUser())
@@ -40,29 +40,18 @@ public class AuthorController : Controller
     }
 
     [HttpPost]
-    public async Task<IActionResult> Create(Author author)
+    public async Task<IActionResult> Create(User user)
     {
         if (!_validateUserSession.HasUser())
         {
             return RedirectToRoute(new { Controller = "Auth", Action = "Login"});
         }
         
-        _dbContext.Set<Author>().Add(author);
+        user.Role = Roles.Admin;
+        await _dbContext.Set<User>().AddAsync(user);
         await _dbContext.SaveChangesAsync();
         return RedirectToAction(nameof(Index));
     }
-
-    public async Task<IActionResult> Delete(int id)
-    {
-        if (!_validateUserSession.HasUser())
-        {
-            return RedirectToRoute(new { Controller = "Auth", Action = "Login"});
-        }
-        
-        Author author = (await _dbContext.Set<Author>().FindAsync(id))!;
-        return View(author);
-    }
-
     public async Task<IActionResult> Edit(int id)
     {
         if (!_validateUserSession.HasUser())
@@ -70,35 +59,46 @@ public class AuthorController : Controller
             return RedirectToRoute(new { Controller = "Auth", Action = "Login"});
         }
         
-        Author author = (await _dbContext.Set<Author>().FindAsync(id))!;
-        return View(author);
-    }
-    
-    [HttpPost]
-    public async Task<IActionResult> Delete(Author author)
-    {
-        if (!_validateUserSession.HasUser())
-        {
-            return RedirectToRoute(new { Controller = "Auth", Action = "Login"});
-        }
-        
-        _dbContext.Set<Author>().Remove(author);
-        await _dbContext.SaveChangesAsync();
-        return RedirectToAction(nameof(Index));
+        User user = (await _dbContext.Set<User>().FindAsync(id))!;
+        return View(user);
     }
 
     [HttpPost]
-    public async Task<IActionResult> Edit(Author author)
+    public async Task<IActionResult> Edit(User user)
     {
         if (!_validateUserSession.HasUser())
         {
             return RedirectToRoute(new { Controller = "Auth", Action = "Login"});
         }
         
-        Author currentAuthor = (await _dbContext.Set<Author>().FindAsync(author.Id))!;
-        _dbContext.Set<Author>().Entry(currentAuthor).CurrentValues.SetValues(author);    
+        user.Role = Roles.Admin;
+        User userToUpdate = (await _dbContext.Set<User>().FindAsync(user.Id))!;
+        _dbContext.Set<User>().Entry(userToUpdate).CurrentValues.SetValues(user);
         await _dbContext.SaveChangesAsync();
         return RedirectToAction(nameof(Index));
     }
     
+    public async Task<IActionResult> Delete(int id)
+    {
+        if (!_validateUserSession.HasUser())
+        {
+            return RedirectToRoute(new { Controller = "Auth", Action = "Login"});
+        }
+        
+        User user = (await _dbContext.Set<User>().FindAsync(id))!;
+        return View(user);
+    }
+
+    [HttpPost]
+    public async Task<IActionResult> Delete(User user)
+    {
+        if (!_validateUserSession.HasUser())
+        {
+            return RedirectToRoute(new { Controller = "Auth", Action = "Login"});
+        }
+        
+        _dbContext.Set<User>().Remove(user);
+        await _dbContext.SaveChangesAsync();
+        return RedirectToAction(nameof(Index));
+    }
 }

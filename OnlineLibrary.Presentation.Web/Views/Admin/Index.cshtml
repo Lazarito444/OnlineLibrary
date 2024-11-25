@@ -1,0 +1,57 @@
+@using OnlineLibrary.Core.Domain.Entities
+@using OnlineLibrary.Core.Domain.Enums
+@model List<User>
+@{
+    Layout = "_Layout";
+    ViewData["Title"] = "Admins | Online Library";
+    List<User> admins = Model.Where(u => u.Role == Roles.Admin).ToList();
+}
+
+<div class="container-fluid m-12">
+    <h1>Admins</h1>
+    <br><br>
+    <a class="btn btn-primary" asp-controller="Admin" asp-action="Create">Create Admin</a>
+    <br><br>
+    
+    @if (admins.Count == 0)
+    {
+        <h2>No Admins found</h2>
+    }
+    else
+    {
+        <table class="table">
+            <thead>
+            <tr>
+                <th scope="col">ID</th>
+                <th scope="col">Full Name</th>
+                <th scope="col">Email</th>
+                <th scope="col">Date of birth</th>
+                <th scope="col">Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            @foreach (User admin in admins)
+            {
+                <tr>
+                    <td>@admin.Id</td>
+                    <td>@admin.FullName</td>
+                    <td>@admin.Email</td>
+                    <td>@admin.DateOfBirth.Day/@admin.DateOfBirth.Month/@admin.DateOfBirth.Year</td>
+                    <td>
+                        <a class="btn-warning btn" asp-route-id="@admin.Id" asp-controller="Admin" asp-action="Edit">Edit</a>
+                        @if (admins.Count > 1)
+                        {
+                            <a class="btn-danger btn" asp-route-id="@admin.Id" asp-controller="Admin" asp-action="Delete">Delete</a>
+                        }
+                        else
+                        {
+                            <a class="btn-danger btn disabled">Delete</a>
+                        }
+                    </td>
+                </tr>
+            }
+            </tbody>
+        </table>
+    }
+    
+</div>

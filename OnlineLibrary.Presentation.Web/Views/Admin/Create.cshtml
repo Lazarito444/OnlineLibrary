@@ -1,0 +1,35 @@
+@using OnlineLibrary.Core.Domain.Entities
+@model User
+@{
+    Layout = "_Layout";
+    ViewData["Title"] = "Create Admin | Online Library";
+}
+
+<div class="card" style="width: 32rem;">
+    <div class="card-body">
+        <h5 class="card-title fs-3">Create Admin</h5>
+        <h6 class="card-subtitle mb-2 text-muted">Online Library Management System</h6>
+        <br>
+        <br>
+        <form asp-controller="Admin" asp-action="Create" method="post">
+            <div class="input-group mb-3">
+                <span class="input-group-text">Full Name</span>
+                <input asp-for="FullName" type="text" class="form-control" placeholder="Full name" aria-label="Full name">
+            </div>
+            <div class="input-group mb-3">
+                <span class="input-group-text">Date of birth</span>
+                <input asp-for="DateOfBirth" type="date" class="form-control" placeholder="Date of birth" aria-label="Date of birth">
+            </div>
+            <div class="input-group mb-3">
+                <span class="input-group-text">Email</span>
+                <input asp-for="Email" type="email" class="form-control" placeholder="Email" aria-label="Email">
+            </div>
+            <div class="input-group mb-3">
+                <span class="input-group-text">Password</span>
+                <input asp-for="Password" type="password" class="form-control" placeholder="Password" aria-label="Password">
+            </div>
+      
+            <button class="btn btn-primary">Create</button>
+        </form>
+    </div>
+</div>

@@ -1,0 +1,22 @@
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css"/>
+    <title>Welcome | Online Library</title>
+</head>
+<body class="d-flex min-vh-100 justify-content-center align-items-center">
+<div class="card" style="width: 32rem;">
+    <div class="card-body">
+        <h5 class="card-title fs-3 text-center">Welcome!</h5>
+        <h6 class="card-subtitle mb-2 text-muted text-center">Thanks for using our solution.</h6>
+        <br><br>
+        <p class="text-center"><a asp-controller="Auth" asp-action="Login" class="btn btn-primary">Redirect to login</a></p>
+    </div>
+</div>
+</body>
+</html>

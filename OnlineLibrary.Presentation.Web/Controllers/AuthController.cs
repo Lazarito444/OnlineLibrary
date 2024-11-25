@@ -81,7 +81,17 @@ public class AuthController : Controller
         user.Role = Roles.User;
         await _dbContext.Set<User>().AddAsync(user);
         await _dbContext.SaveChangesAsync();
-        return RedirectToAction(nameof(Login));
+        return RedirectToAction(nameof(Welcome));
+    }
+
+    public IActionResult Welcome()
+    {
+        if (_validateUserSession.HasUser())
+        {
+            return RedirectToRoute(new { Controller = "Book", Action = "Index" });
+        }
+        
+        return View();
     }
     
     public IActionResult LogOut()

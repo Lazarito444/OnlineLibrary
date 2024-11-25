@@ -19,7 +19,12 @@ public class BookController : Controller
     }
 
     public async Task<IActionResult> Index()
-    {
+    {        
+        if (!_validateUserSession.HasUser())
+        {
+            return RedirectToRoute(new { Controller = "Auth", Action = "Login"});
+        }
+        
         List<Book> books = await _dbContext.Set<Book>()
             .Include(book => book.Author)
             .Include(book => book.Publisher)
@@ -29,6 +34,11 @@ public class BookController : Controller
 
     public async Task<IActionResult> Create()
     {
+        if (!_validateUserSession.HasUser())
+        {
+            return RedirectToRoute(new { Controller = "Auth", Action = "Login"});
+        }
+        
         List<Author> authors = await _dbContext.Set<Author>().ToListAsync();
         List<Publisher> publishers = await _dbContext.Set<Publisher>().ToListAsync();
 
@@ -53,6 +63,11 @@ public class BookController : Controller
     [HttpPost]
     public async Task<IActionResult> Create(Book book)
     {
+        if (!_validateUserSession.HasUser())
+        {
+            return RedirectToRoute(new { Controller = "Auth", Action = "Login"});
+        }
+        
         await _dbContext.Set<Book>().AddAsync(book);
         await _dbContext.SaveChangesAsync();
         return RedirectToAction(nameof(Index));
@@ -60,6 +75,11 @@ public class BookController : Controller
 
     public async Task<IActionResult> Edit(int id)
     {
+        if (!_validateUserSession.HasUser())
+        {
+            return RedirectToRoute(new { Controller = "Auth", Action = "Login"});
+        }
+        
         Book currentBook = (await _dbContext.Set<Book>()
             .Include(book => book.Author)
             .Include(book => book.Publisher)
@@ -90,6 +110,11 @@ public class BookController : Controller
     [HttpPost]
     public async Task<IActionResult> Edit(Book book)
     {
+        if (!_validateUserSession.HasUser())
+        {
+            return RedirectToRoute(new { Controller = "Auth", Action = "Login"});
+        }
+        
         Book currentBook = (await _dbContext.Set<Book>().FindAsync(book.Id))!;
         _dbContext.Set<Book>().Entry(currentBook).CurrentValues.SetValues(book);
         await _dbContext.SaveChangesAsync();
@@ -98,6 +123,11 @@ public class BookController : Controller
     
     public async Task<IActionResult> Delete(int id)
     {
+        if (!_validateUserSession.HasUser())
+        {
+            return RedirectToRoute(new { Controller = "Auth", Action = "Login"});
+        }
+        
         Book currentBook = (await _dbContext.Set<Book>()
             .Include(book => book.Author)
             .Include(book => book.Publisher)
@@ -108,6 +138,11 @@ public class BookController : Controller
     [HttpPost]
     public async Task<IActionResult> Delete(Book book)
     {
+        if (!_validateUserSession.HasUser())
+        {
+            return RedirectToRoute(new { Controller = "Auth", Action = "Login"});
+        }
+        
         Book currentBook = (await _dbContext.Set<Book>().FindAsync(book.Id))!;
         _dbContext.Set<Book>().Remove(currentBook);
         await _dbContext.SaveChangesAsync();

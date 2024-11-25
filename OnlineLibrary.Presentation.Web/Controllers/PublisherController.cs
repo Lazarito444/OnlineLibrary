@@ -19,18 +19,33 @@ public class PublisherController : Controller
 
     public async Task<IActionResult> Index()
     {
+        if (!_validateUserSession.HasUser())
+        {
+            return RedirectToRoute(new { Controller = "Auth", Action = "Login"});
+        }
+        
         List<Publisher> publishers = await _dbContext.Set<Publisher>().ToListAsync();
         return View(publishers);
     }
 
     public IActionResult Create()
     {
+        if (!_validateUserSession.HasUser())
+        {
+            return RedirectToRoute(new { Controller = "Auth", Action = "Login"});
+        }
+        
         return View();
     }
 
     [HttpPost]
     public async Task<IActionResult> Create(Publisher publisher)
     {
+        if (!_validateUserSession.HasUser())
+        {
+            return RedirectToRoute(new { Controller = "Auth", Action = "Login"});
+        }
+        
         await _dbContext.Set<Publisher>().AddAsync(publisher);
         await _dbContext.SaveChangesAsync();
         return RedirectToAction(nameof(Index));
@@ -38,6 +53,11 @@ public class PublisherController : Controller
 
     public async Task<IActionResult> Edit(int id)
     {
+        if (!_validateUserSession.HasUser())
+        {
+            return RedirectToRoute(new { Controller = "Auth", Action = "Login"});
+        }
+        
         Publisher? currentPublisher = await _dbContext.Set<Publisher>().FindAsync(id);
 
         if (currentPublisher == null) return RedirectToAction(nameof(Index));
@@ -47,6 +67,11 @@ public class PublisherController : Controller
 
     public async Task<IActionResult> Delete(int id)
     {
+        if (!_validateUserSession.HasUser())
+        {
+            return RedirectToRoute(new { Controller = "Auth", Action = "Login"});
+        }
+        
         Publisher? currentPublisher = await _dbContext.Set<Publisher>().FindAsync(id);
 
         if (currentPublisher == null) return RedirectToAction(nameof(Index));
@@ -57,6 +82,11 @@ public class PublisherController : Controller
     [HttpPost]
     public async Task<IActionResult> Delete(Publisher publisher)
     {
+        if (!_validateUserSession.HasUser())
+        {
+            return RedirectToRoute(new { Controller = "Auth", Action = "Login"});
+        }
+        
         _dbContext.Set<Publisher>().Remove(publisher);
         await _dbContext.SaveChangesAsync();
         return RedirectToAction(nameof(Index));
@@ -65,6 +95,11 @@ public class PublisherController : Controller
     [HttpPost]
     public async Task<IActionResult> Edit(Publisher publisher)
     {
+        if (!_validateUserSession.HasUser())
+        {
+            return RedirectToRoute(new { Controller = "Auth", Action = "Login"});
+        }
+        
         Publisher currentPublisher = (await _dbContext.Set<Publisher>().FindAsync(publisher.Id))!;
         _dbContext.Set<Publisher>().Entry(currentPublisher).CurrentValues.SetValues(publisher);    
         await _dbContext.SaveChangesAsync();
