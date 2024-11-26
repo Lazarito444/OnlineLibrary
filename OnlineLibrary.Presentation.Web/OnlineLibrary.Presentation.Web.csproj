@@ -14,7 +14,6 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\OnlineLibrary.Core.Application\OnlineLibrary.Core.Application.csproj" />
       <ProjectReference Include="..\OnlineLibrary.Infrastructure.Persistence\OnlineLibrary.Infrastructure.Persistence.csproj" />
     </ItemGroup>
 

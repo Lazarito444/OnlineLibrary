@@ -19,5 +19,6 @@ public class AppDbContext : DbContext
         modelBuilder.ApplyConfiguration(new AuthorConfiguration());
         modelBuilder.ApplyConfiguration(new BookConfiguration());
         modelBuilder.ApplyConfiguration(new PublisherConfiguration());
+        modelBuilder.ApplyConfiguration(new ResetTokenConfiguration());
     }
 }

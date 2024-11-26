@@ -1,14 +1,14 @@
-using OnlineLibrary.Core.Application;
 using OnlineLibrary.Infrastructure.Persistence;
 using OnlineLibrary.Presentation.Web.Middleware;
+using OnlineLibrary.Presentation.Web.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-builder.Services.AddApplicationLayer();
 builder.Services.AddPersistenceLayer(builder.Configuration.GetConnectionString("DefaultConnection")!);
 builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 builder.Services.AddTransient<ValidateUserSession, ValidateUserSession>();
+builder.Services.AddTransient<EmailService, EmailService>();
 builder.Services.AddControllersWithViews();
 builder.Services.AddSession();
 var app = builder.Build();

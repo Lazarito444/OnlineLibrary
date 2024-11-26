@@ -1,10 +1,9 @@
 {
   "version": 2,
-  "dgSpecHash": "JVaWWvqmXY5FF19zelz9jQLRPeO83wjssmmaiuscvr/4T2erneV/A0NmOZYbEm8283R6nVhTOz4VrJjmX1KncQ==",
+  "dgSpecHash": "CVH6JoILQbIbKs8JXn+b5xdzKBWBEaixoS39fL+6Yk4kWje1MsEgsB5cSDnwdsfFnRHPH4AacesUxQHihBYn5Q==",
   "success": true,
   "projectFilePath": "C:\\Users\\Admin\\Desktop\\Laza's Projects\\OnlineLibrary\\OnlineLibrary.Presentation.Web\\OnlineLibrary.Presentation.Web.csproj",
   "expectedPackageFiles": [
-    "C:\\Users\\Admin\\.nuget\\packages\\automapper\\13.0.1\\automapper.13.0.1.nupkg.sha512",
     "C:\\Users\\Admin\\.nuget\\packages\\azure.core\\1.35.0\\azure.core.1.35.0.nupkg.sha512",
     "C:\\Users\\Admin\\.nuget\\packages\\azure.identity\\1.10.3\\azure.identity.1.10.3.nupkg.sha512",
     "C:\\Users\\Admin\\.nuget\\packages\\humanizer.core\\2.14.1\\humanizer.core.2.14.1.nupkg.sha512",
