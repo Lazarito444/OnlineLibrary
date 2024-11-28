@@ -10,6 +10,7 @@ public class Book
     public int PagesCount { get; set; }
     public string Title { get; set; }
     public string Synopsis { get; set; }
+    public string ImageUrl { get; set; }
     public DateTime PublishedDate { get; set; }
     public BookGenre BookGenre { get; set; }
     public Publisher Publisher { get; set; }

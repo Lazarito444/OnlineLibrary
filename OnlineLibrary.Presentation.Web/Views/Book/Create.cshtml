@@ -9,7 +9,7 @@
 
 <h2>@ViewData["Title"]</h2>
 
-<form asp-controller="Book" asp-action="Create" method="post">
+<form asp-controller="Book" asp-action="Create" method="post" enctype="multipart/form-data">
     <div class="card">
         <div class="input-group mb-3">
             <span class="input-group-text">Title</span>
@@ -26,6 +26,10 @@
         <div class="input-group mb-3">
             <span class="input-group-text">Published Date</span>
             <input asp-for="PublishedDate" type="date" class="form-control" placeholder="Published Date" aria-label="Published Date" aria-describedby="basic-addon1">
+        </div>
+        <div class="input-group mb-3">
+            <span class="input-group-text">Photo</span>
+            <input name="img" type="file" accept="image/png" class="form-control" placeholder="Published Date" aria-label="Published Date" aria-describedby="basic-addon1">
         </div>
         <div class="mb-3">
             <label>Book Genre</label>

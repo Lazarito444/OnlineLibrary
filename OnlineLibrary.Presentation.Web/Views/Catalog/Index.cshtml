@@ -1,0 +1,36 @@
+@using OnlineLibrary.Core.Domain.Entities
+@model List<Book>
+
+@{
+    ViewData["Title"] = "Book Catalog | OL";
+    Layout = "_Layout";
+}
+
+<h2>@ViewData["Title"]</h2>
+
+<br>
+<form method="post">
+    <input type="text" name="query" class="mx-4 py-1 px-2 rounded-2"> <button class="btn btn-secondary" asp-controller="Catalog" asp-action="Index">Search</button>
+</form>
+<br>
+
+@if (Model.Count == 0)
+{
+    <h3>No hay libros disponibles</h3>
+}
+else
+{
+    foreach (Book book in Model)
+    {
+        <div class="card m-4" style="width: 18rem;">
+            @* <img class="card-img-top" src="..." alt="Card image cap"> *@
+            <div class="card-body">
+                <h5 class="card-title">@book.Title</h5>
+                <p class="card-text">@book.Synopsis</p>
+                <p class="card-text">@book.BookGenre</p>
+                <a asp-controller="Catalog" asp-action="ViewDetails" asp-route-id="@book.Id" class="btn btn-secondary">View Details</a> 
+                <a asp-controller="Catalog" asp-action="BorrowBook" asp-route-id="@book.Id" class="btn btn-primary">Borrow Book</a> 
+            </div>
+        </div>
+    }
+}

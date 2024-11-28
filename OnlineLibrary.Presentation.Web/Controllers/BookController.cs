@@ -67,7 +67,8 @@ public class BookController : Controller
         {
             return RedirectToRoute(new { Controller = "Auth", Action = "Login"});
         }
-        
+
+        book.ImageUrl = "N/A";
         await _dbContext.Set<Book>().AddAsync(book);
         await _dbContext.SaveChangesAsync();
         return RedirectToAction(nameof(Index));
@@ -147,5 +148,24 @@ public class BookController : Controller
         _dbContext.Set<Book>().Remove(currentBook);
         await _dbContext.SaveChangesAsync();
         return RedirectToAction(nameof(Index));
+    }
+
+    private string UploadFile(IFormFile img, int id)
+    {
+        string path = Path.Combine(Directory.GetCurrentDirectory(), $"wwwroot/imgs/books");
+        
+        if (!Directory.Exists(path))
+        {
+            Directory.CreateDirectory(path);
+        }
+
+        path = Path.Combine(path, id.ToString());
+        
+        using (var stream = new FileStream(path, FileMode.Create))
+        {
+            img.CopyTo(stream);
+        }
+        
+        return path;
     }
 }
