@@ -19,7 +19,7 @@ public class PublisherController : Controller
 
     public async Task<IActionResult> Index()
     {
-        if (!_validateUserSession.HasUser())
+        if (!_validateUserSession.HasAdminUser())
         {
             return RedirectToRoute(new { Controller = "Auth", Action = "Login"});
         }
@@ -30,7 +30,7 @@ public class PublisherController : Controller
 
     public IActionResult Create()
     {
-        if (!_validateUserSession.HasUser())
+        if (!_validateUserSession.HasAdminUser())
         {
             return RedirectToRoute(new { Controller = "Auth", Action = "Login"});
         }
@@ -41,7 +41,7 @@ public class PublisherController : Controller
     [HttpPost]
     public async Task<IActionResult> Create(Publisher publisher)
     {
-        if (!_validateUserSession.HasUser())
+        if (!_validateUserSession.HasAdminUser())
         {
             return RedirectToRoute(new { Controller = "Auth", Action = "Login"});
         }
@@ -53,7 +53,7 @@ public class PublisherController : Controller
 
     public async Task<IActionResult> Edit(int id)
     {
-        if (!_validateUserSession.HasUser())
+        if (!_validateUserSession.HasAdminUser())
         {
             return RedirectToRoute(new { Controller = "Auth", Action = "Login"});
         }
@@ -67,7 +67,7 @@ public class PublisherController : Controller
 
     public async Task<IActionResult> Delete(int id)
     {
-        if (!_validateUserSession.HasUser())
+        if (!_validateUserSession.HasAdminUser())
         {
             return RedirectToRoute(new { Controller = "Auth", Action = "Login"});
         }
@@ -82,7 +82,7 @@ public class PublisherController : Controller
     [HttpPost]
     public async Task<IActionResult> Delete(Publisher publisher)
     {
-        if (!_validateUserSession.HasUser())
+        if (!_validateUserSession.HasAdminUser())
         {
             return RedirectToRoute(new { Controller = "Auth", Action = "Login"});
         }
@@ -95,7 +95,7 @@ public class PublisherController : Controller
     [HttpPost]
     public async Task<IActionResult> Edit(Publisher publisher)
     {
-        if (!_validateUserSession.HasUser())
+        if (!_validateUserSession.HasAdminUser())
         {
             return RedirectToRoute(new { Controller = "Auth", Action = "Login"});
         }

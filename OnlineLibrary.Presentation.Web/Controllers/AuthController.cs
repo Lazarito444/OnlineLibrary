@@ -28,7 +28,7 @@ public class AuthController : Controller
     {
         if (_validateUserSession.HasUser())
         {
-            return RedirectToRoute(new { Controller = "Book", Action = "Index" });
+            return RedirectToRoute(new { Controller = "Catalog", Action = "Index" });
         }
         
         return View("Login");
@@ -38,7 +38,7 @@ public class AuthController : Controller
     {
         if (_validateUserSession.HasUser())
         {
-            return RedirectToRoute(new { Controller = "Book", Action = "Index" });
+            return RedirectToRoute(new { Controller = "Catalog", Action = "Index" });
         }
         
         return View();
@@ -48,7 +48,7 @@ public class AuthController : Controller
     {
         if (_validateUserSession.HasUser())
         {
-            return RedirectToRoute(new { Controller = "Book", Action = "Index" });
+            return RedirectToRoute(new { Controller = "Catalog", Action = "Index" });
         }
         
         return View();
@@ -59,7 +59,7 @@ public class AuthController : Controller
     {
         if (_validateUserSession.HasUser())
         {
-            return RedirectToRoute(new { Controller = "Book", Action = "Index" });
+            return RedirectToRoute(new { Controller = "Catalog", Action = "Index" });
         }
         
         User? foundUser = await _dbContext.Set<User>().SingleOrDefaultAsync(u => u.Email == user.Email && u.Password == user.Password);
@@ -68,7 +68,7 @@ public class AuthController : Controller
 
         HttpContext.Session.Set("LoggedUser", foundUser);
         
-        return RedirectToRoute(new { Controller = "Book", Action = "Index" });
+        return RedirectToRoute(new { Controller = "Catalog", Action = "Index" });
     }
 
     [HttpPost]
@@ -76,7 +76,7 @@ public class AuthController : Controller
     {
         if (_validateUserSession.HasUser())
         {
-            return RedirectToRoute(new { Controller = "Book", Action = "Index" });
+            return RedirectToRoute(new { Controller = "Catalog", Action = "Index" });
         }
 
         User? userWithSameEmail = await _dbContext.Set<User>().FirstOrDefaultAsync(u => user.Email == u.Email);
@@ -93,7 +93,7 @@ public class AuthController : Controller
     {
         if (_validateUserSession.HasUser())
         {
-            return RedirectToRoute(new { Controller = "Book", Action = "Index" });
+            return RedirectToRoute(new { Controller = "Catalog", Action = "Index" });
         }
         
         return View();
@@ -119,7 +119,7 @@ public class AuthController : Controller
     {
         if (_validateUserSession.HasUser())
         {
-            return RedirectToRoute(new { Controller = "Book", Action = "Index" });
+            return RedirectToRoute(new { Controller = "Catalog", Action = "Index" });
         }
         
         return View();
@@ -130,7 +130,7 @@ public class AuthController : Controller
     {
         if (_validateUserSession.HasUser())
         {
-            return RedirectToRoute(new { Controller = "Book", Action = "Index" });
+            return RedirectToRoute(new { Controller = "Catalog", Action = "Index" });
         }
         
         User? user = await _dbContext.Set<User>().FirstOrDefaultAsync(u => u.Email == email);
@@ -170,6 +170,11 @@ public class AuthController : Controller
 
     public IActionResult ResetPassword(string token)
     {
+        if (_validateUserSession.HasUser())
+        {
+            return RedirectToRoute(new { Controller = "Catalog", Action = "Index" });
+        }
+        
         ViewData["token"] = token;
         return View();
     }
@@ -177,6 +182,11 @@ public class AuthController : Controller
     [HttpPost]
     public async Task<IActionResult> ResetPasswordPost(string token, string newPassword)
     {
+        if (_validateUserSession.HasUser())
+        {
+            return RedirectToRoute(new { Controller = "Catalog", Action = "Index" });
+        }
+        
         ResetToken resetToken = _dbContext.Set<ResetToken>().FirstOrDefault(rt => rt.Token.ToString() == token)!;
         User user = (await _dbContext.Set<User>().FindAsync(resetToken.UserId))!;
 

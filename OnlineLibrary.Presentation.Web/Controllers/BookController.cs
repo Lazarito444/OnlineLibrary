@@ -20,7 +20,7 @@ public class BookController : Controller
 
     public async Task<IActionResult> Index()
     {        
-        if (!_validateUserSession.HasUser())
+        if (!_validateUserSession.HasAdminUser())
         {
             return RedirectToRoute(new { Controller = "Auth", Action = "Login"});
         }
@@ -34,7 +34,7 @@ public class BookController : Controller
 
     public async Task<IActionResult> Create()
     {
-        if (!_validateUserSession.HasUser())
+        if (!_validateUserSession.HasAdminUser())
         {
             return RedirectToRoute(new { Controller = "Auth", Action = "Login"});
         }
@@ -63,7 +63,7 @@ public class BookController : Controller
     [HttpPost]
     public async Task<IActionResult> Create(Book book)
     {
-        if (!_validateUserSession.HasUser())
+        if (!_validateUserSession.HasAdminUser())
         {
             return RedirectToRoute(new { Controller = "Auth", Action = "Login"});
         }
@@ -76,7 +76,7 @@ public class BookController : Controller
 
     public async Task<IActionResult> Edit(int id)
     {
-        if (!_validateUserSession.HasUser())
+        if (!_validateUserSession.HasAdminUser())
         {
             return RedirectToRoute(new { Controller = "Auth", Action = "Login"});
         }
@@ -111,7 +111,7 @@ public class BookController : Controller
     [HttpPost]
     public async Task<IActionResult> Edit(Book book)
     {
-        if (!_validateUserSession.HasUser())
+        if (!_validateUserSession.HasAdminUser())
         {
             return RedirectToRoute(new { Controller = "Auth", Action = "Login"});
         }
@@ -124,7 +124,7 @@ public class BookController : Controller
     
     public async Task<IActionResult> Delete(int id)
     {
-        if (!_validateUserSession.HasUser())
+        if (!_validateUserSession.HasAdminUser())
         {
             return RedirectToRoute(new { Controller = "Auth", Action = "Login"});
         }
@@ -139,7 +139,7 @@ public class BookController : Controller
     [HttpPost]
     public async Task<IActionResult> Delete(Book book)
     {
-        if (!_validateUserSession.HasUser())
+        if (!_validateUserSession.HasAdminUser())
         {
             return RedirectToRoute(new { Controller = "Auth", Action = "Login"});
         }

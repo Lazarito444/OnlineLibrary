@@ -19,7 +19,7 @@ public class AuthorController : Controller
 
     public async Task<IActionResult> Index()
     {
-        if (!_validateUserSession.HasUser())
+        if (!_validateUserSession.HasAdminUser())
         {
             return RedirectToRoute(new { Controller = "Auth", Action = "Login"});
         }
@@ -31,7 +31,7 @@ public class AuthorController : Controller
     
     public IActionResult Create()
     {
-        if (!_validateUserSession.HasUser())
+        if (!_validateUserSession.HasAdminUser())
         {
             return RedirectToRoute(new { Controller = "Auth", Action = "Login"});
         }
@@ -42,7 +42,7 @@ public class AuthorController : Controller
     [HttpPost]
     public async Task<IActionResult> Create(Author author)
     {
-        if (!_validateUserSession.HasUser())
+        if (!_validateUserSession.HasAdminUser())
         {
             return RedirectToRoute(new { Controller = "Auth", Action = "Login"});
         }
@@ -54,7 +54,7 @@ public class AuthorController : Controller
 
     public async Task<IActionResult> Delete(int id)
     {
-        if (!_validateUserSession.HasUser())
+        if (!_validateUserSession.HasAdminUser())
         {
             return RedirectToRoute(new { Controller = "Auth", Action = "Login"});
         }
@@ -65,7 +65,7 @@ public class AuthorController : Controller
 
     public async Task<IActionResult> Edit(int id)
     {
-        if (!_validateUserSession.HasUser())
+        if (!_validateUserSession.HasAdminUser())
         {
             return RedirectToRoute(new { Controller = "Auth", Action = "Login"});
         }
@@ -77,7 +77,7 @@ public class AuthorController : Controller
     [HttpPost]
     public async Task<IActionResult> Delete(Author author)
     {
-        if (!_validateUserSession.HasUser())
+        if (!_validateUserSession.HasAdminUser())
         {
             return RedirectToRoute(new { Controller = "Auth", Action = "Login"});
         }
@@ -90,7 +90,7 @@ public class AuthorController : Controller
     [HttpPost]
     public async Task<IActionResult> Edit(Author author)
     {
-        if (!_validateUserSession.HasUser())
+        if (!_validateUserSession.HasAdminUser())
         {
             return RedirectToRoute(new { Controller = "Auth", Action = "Login"});
         }

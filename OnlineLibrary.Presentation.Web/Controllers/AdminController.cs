@@ -20,7 +20,7 @@ public class AdminController : Controller
     
     public async Task<IActionResult> Index()
     {
-        if (!_validateUserSession.HasUser())
+        if (!_validateUserSession.HasAdminUser())
         {
             return RedirectToRoute(new { Controller = "Auth", Action = "Login"});
         }
@@ -31,7 +31,7 @@ public class AdminController : Controller
 
     public IActionResult Create()
     {
-        if (!_validateUserSession.HasUser())
+        if (!_validateUserSession.HasAdminUser())
         {
             return RedirectToRoute(new { Controller = "Auth", Action = "Login"});
         }
@@ -42,7 +42,7 @@ public class AdminController : Controller
     [HttpPost]
     public async Task<IActionResult> Create(User user)
     {
-        if (!_validateUserSession.HasUser())
+        if (!_validateUserSession.HasAdminUser())
         {
             return RedirectToRoute(new { Controller = "Auth", Action = "Login"});
         }
@@ -54,7 +54,7 @@ public class AdminController : Controller
     }
     public async Task<IActionResult> Edit(int id)
     {
-        if (!_validateUserSession.HasUser())
+        if (!_validateUserSession.HasAdminUser())
         {
             return RedirectToRoute(new { Controller = "Auth", Action = "Login"});
         }
@@ -66,7 +66,7 @@ public class AdminController : Controller
     [HttpPost]
     public async Task<IActionResult> Edit(User user)
     {
-        if (!_validateUserSession.HasUser())
+        if (!_validateUserSession.HasAdminUser())
         {
             return RedirectToRoute(new { Controller = "Auth", Action = "Login"});
         }
@@ -80,7 +80,7 @@ public class AdminController : Controller
     
     public async Task<IActionResult> Delete(int id)
     {
-        if (!_validateUserSession.HasUser())
+        if (!_validateUserSession.HasAdminUser())
         {
             return RedirectToRoute(new { Controller = "Auth", Action = "Login"});
         }
@@ -92,7 +92,7 @@ public class AdminController : Controller
     [HttpPost]
     public async Task<IActionResult> Delete(User user)
     {
-        if (!_validateUserSession.HasUser())
+        if (!_validateUserSession.HasAdminUser())
         {
             return RedirectToRoute(new { Controller = "Auth", Action = "Login"});
         }

@@ -1,4 +1,6 @@
-﻿<!DOCTYPE html>
+﻿@using OnlineLibrary.Presentation.Web.Middleware
+@inject ValidateUserSession _validateUserSession
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8"/>
@@ -12,21 +14,37 @@
 <header>
     <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
         <div class="container-fluid">
-            <a class="navbar-brand">OnlineLibrary</a>
+            <a class="navbar-brand"><strong>Online Library</strong></a>
             <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                 <ul class="navbar-nav flex-grow-1">
-                    <li class="nav-item">
-                        <a class="nav-link text-dark" asp-controller="Book" asp-action="Index">Books</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link text-dark" asp-controller="Author" asp-action="Index">Authors</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link text-dark" asp-controller="Publisher" asp-action="Index">Publishers</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link text-dark" asp-controller="Admin" asp-action="Index">Admins</a>
-                    </li>
+                    @if (_validateUserSession.HasAdminUser())
+                    {
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-controller="Book" asp-action="Index">Books</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-controller="Author" asp-action="Index">Authors</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-controller="Publisher" asp-action="Index">Publishers</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-controller="Admin" asp-action="Index">Admins</a>
+                        </li>
+                    }
+                    else
+                    {
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-controller="Catalog" asp-action="Index">Book Catalog</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-controller="BorrowedBook" asp-action="Index">Borrowed Books</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-controller="Profile" asp-action="Index">Profile</a>
+                        </li>
+                    }
+                    
                     <li class="nav-item">
                         <a class="nav-link text-dark" asp-controller="Auth" asp-action="LogOut">Log Out</a>
                     </li>
