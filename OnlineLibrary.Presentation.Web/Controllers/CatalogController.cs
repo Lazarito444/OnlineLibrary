@@ -63,6 +63,26 @@ public class CatalogController : Controller
             return RedirectToRoute(new { Controller = "Book", Action = "Index" });
         }
         
-        return View();
+        Book book = await _dbContext.Set<Book>()
+            .Include(book => book.Publisher)
+            .Include(book => book.Author)
+            .FirstAsync(book => book.Id == id);
+
+        return View("BorrowBookConfirmation", book);
+    }
+    
+    public async Task<IActionResult> BorrowBookPost(int id)
+    {
+        if (!_validateUserSession.HasClientUser())
+        {
+            return RedirectToRoute(new { Controller = "Book", Action = "Index" });
+        }
+        
+        Book book = await _dbContext.Set<Book>()
+            .Include(book => book.Publisher)
+            .Include(book => book.Author)
+            .FirstAsync(book => book.Id == id);
+
+        return View(nameof(Index));
     }
 }

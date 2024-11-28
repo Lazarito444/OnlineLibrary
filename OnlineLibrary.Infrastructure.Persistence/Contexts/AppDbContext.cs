@@ -20,5 +20,6 @@ public class AppDbContext : DbContext
         modelBuilder.ApplyConfiguration(new BookConfiguration());
         modelBuilder.ApplyConfiguration(new PublisherConfiguration());
         modelBuilder.ApplyConfiguration(new ResetTokenConfiguration());
+        modelBuilder.ApplyConfiguration(new BorrowedBookConfiguration());
     }
 }

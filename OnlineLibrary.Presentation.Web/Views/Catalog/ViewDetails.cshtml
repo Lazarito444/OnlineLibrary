@@ -6,4 +6,15 @@
     Layout = "_Layout";
 }
 
-<h2>title</h2>
+<div class="container-fluid card">
+    <p><strong>Title: </strong>@Model.Title</p>
+    <p><strong>Author: </strong>@Model.Author.FullName</p>
+    <p><strong>Publisher: </strong>@Model.Publisher.Name</p>
+    <p><strong>Synopsis: </strong>@Model.Synopsis</p>
+    <p><strong>Genre: </strong>@Model.BookGenre</p>
+    <p><strong>Published Date: </strong>@Model.PublishedDate.Day/@Model.PublishedDate.Month/@Model.PublishedDate.Year</p>
+    <p><strong>Page Count: </strong>@Model.PagesCount</p>
+
+    <br><br>
+    <a asp-controller="Catalog" asp-action="Index" class="btn btn-secondary">Go Back</a>
+</div>

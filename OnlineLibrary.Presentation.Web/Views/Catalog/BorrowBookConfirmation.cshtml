@@ -1,0 +1,21 @@
+@using OnlineLibrary.Core.Domain.Entities
+@model Book
+
+@{
+    ViewData["Title"] = "Borrow Book | OL";
+    Layout = "_Layout";
+}
+
+<h2>@ViewData["Title"]</h2>
+<br><br>
+
+<div class="container-fluid">
+    <h3>Want to borrow this book?</h3>
+    <p><strong>Book Title: </strong>@Model.Title</p>
+    <p><strong>Author: </strong>@Model.Author.FullName</p>
+    <p><strong>Publisher: </strong>@Model.Publisher.Name</p>
+
+    <br><br>
+    <a asp-controller="Catalog" asp-action="BorrowBookPost" asp-route-id="@Model.Id" class="btn btn-primary">Borrow book</a> 
+    <a asp-controller="Catalog" asp-action="Index" class="btn btn-secondary">Go back</a>
+</div>
