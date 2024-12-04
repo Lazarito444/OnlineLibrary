@@ -9,6 +9,15 @@
 
 <h2>@ViewData["Title"]</h2>
 
+<br>
+@if ((string?)TempData[""] == "true")
+{
+<div class="alert alert-danger" role="alert">
+    Fill out all the fields!
+</div>
+}
+<br>
+
 <form asp-controller="Book" asp-action="Create" method="post" enctype="multipart/form-data">
     <div class="card">
         <div class="input-group mb-3">
@@ -34,7 +43,6 @@
         <div class="mb-3">
             <label>Book Genre</label>
             <select class="px-6 py-3 rounded" asp-for="BookGenre" asp-items="Html.GetEnumSelectList<BookGenre>()">
-                <option selected="selected" value="">Please select</option>
             </select>
         </div>
         <div class="mb-3">

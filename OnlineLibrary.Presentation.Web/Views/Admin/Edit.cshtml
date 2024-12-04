@@ -10,6 +10,18 @@
         <h5 class="card-title fs-3">Edit Admin</h5>
         <h6 class="card-subtitle mb-2 text-muted">Online Library Management System</h6>
         <br>
+        @if ((string?)TempData[""] == "true")
+        {
+        <div class="alert alert-danger" role="alert">
+            Fill out at least the following fields: Full name, date of birth and email
+        </div>
+        }
+        @if ((string?)TempData["emailTaken"] == "true")
+        {
+        <div class="alert alert-danger" role="alert">
+            That email is already taken!
+        </div>
+        }
         <br>
         <form asp-controller="Admin" asp-action="Edit" method="post">
             <div class="input-group mb-3">

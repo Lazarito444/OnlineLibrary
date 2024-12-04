@@ -68,6 +68,30 @@ public class BookController : Controller
             return RedirectToRoute(new { Controller = "Auth", Action = "Login"});
         }
 
+        if ( book.PublishedDate.Equals(default) || book.AuthorId == default || book.Title == null || book.PublisherId == default || book.Synopsis == null ||
+            book.PagesCount == default)
+        {
+            TempData[""] = "true";
+            List<Author> authors = await _dbContext.Set<Author>().ToListAsync();
+            List<Publisher> publishers = await _dbContext.Set<Publisher>().ToListAsync();
+
+            List<SelectListItem> viewAuthors = new List<SelectListItem>();
+            List<SelectListItem> viewPublishers = new List<SelectListItem>();
+        
+            foreach (Author author in authors)
+            {
+                viewAuthors.Add(new SelectListItem { Text = author.FullName, Value = author.Id.ToString() });
+            }
+        
+            foreach (Publisher publisher in publishers)
+            {
+                viewPublishers.Add(new SelectListItem { Text = publisher.Name, Value = publisher.Id.ToString() });
+            }
+
+            ViewBag.ViewAuthors = viewAuthors;
+            ViewBag.ViewPublishers = viewPublishers;
+            return View();
+        }
         book.ImageUrl = "N/A";
         await _dbContext.Set<Book>().AddAsync(book);
         await _dbContext.SaveChangesAsync();
@@ -117,6 +141,32 @@ public class BookController : Controller
         }
         
         Book currentBook = (await _dbContext.Set<Book>().FindAsync(book.Id))!;
+
+        if (book.PagesCount == default || book.PublishedDate == default || book.AuthorId == default || book.PublisherId == default || book.Synopsis == null || book.Title == null)
+        {
+            TempData[""] = "true";
+            List<Author> authors = await _dbContext.Set<Author>().ToListAsync();
+            List<Publisher> publishers = await _dbContext.Set<Publisher>().ToListAsync();
+
+            List<SelectListItem> viewAuthors = new List<SelectListItem>();
+            List<SelectListItem> viewPublishers = new List<SelectListItem>();
+        
+            foreach (Author author in authors)
+            {
+                viewAuthors.Add(new SelectListItem { Text = author.FullName, Value = author.Id.ToString() });
+            }
+        
+            foreach (Publisher publisher in publishers)
+            {
+                viewPublishers.Add(new SelectListItem { Text = publisher.Name, Value = publisher.Id.ToString() });
+            }
+
+            ViewBag.ViewAuthors = viewAuthors;
+            ViewBag.ViewPublishers = viewPublishers;
+            return View(currentBook);
+        }
+
+        book.ImageUrl = "N/A";
         _dbContext.Set<Book>().Entry(currentBook).CurrentValues.SetValues(book);
         await _dbContext.SaveChangesAsync();
         return RedirectToAction(nameof(Index));

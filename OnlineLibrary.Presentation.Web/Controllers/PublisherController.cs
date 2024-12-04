@@ -45,6 +45,12 @@ public class PublisherController : Controller
         {
             return RedirectToRoute(new { Controller = "Auth", Action = "Login"});
         }
+
+        if (string.IsNullOrWhiteSpace(publisher.Name))
+        {
+            TempData[""] = "true";
+            return View();
+        }
         
         await _dbContext.Set<Publisher>().AddAsync(publisher);
         await _dbContext.SaveChangesAsync();
@@ -101,6 +107,13 @@ public class PublisherController : Controller
         }
         
         Publisher currentPublisher = (await _dbContext.Set<Publisher>().FindAsync(publisher.Id))!;
+
+        if (string.IsNullOrWhiteSpace(publisher.Name))
+        {
+            TempData[""] = "true";
+            return View(currentPublisher);
+        }
+        
         _dbContext.Set<Publisher>().Entry(currentPublisher).CurrentValues.SetValues(publisher);    
         await _dbContext.SaveChangesAsync();
         return RedirectToAction(nameof(Index));

@@ -2,20 +2,24 @@
 @model Book
 
 @{
-    ViewData["Title"] = "Borrow Book | OL";
+    ViewData["Title"] = "Borrow Book Confirmation | OL";
     Layout = "_Layout";
 }
 
 <h2>@ViewData["Title"]</h2>
-<br><br>
 
-<div class="container-fluid">
-    <h3>Want to borrow this book?</h3>
-    <p><strong>Book Title: </strong>@Model.Title</p>
-    <p><strong>Author: </strong>@Model.Author.FullName</p>
-    <p><strong>Publisher: </strong>@Model.Publisher.Name</p>
-
-    <br><br>
-    <a asp-controller="Catalog" asp-action="BorrowBookPost" asp-route-id="@Model.Id" class="btn btn-primary">Borrow book</a> 
-    <a asp-controller="Catalog" asp-action="Index" class="btn btn-secondary">Go back</a>
+<div class="card" style="width: 32rem;">
+    <div class="card-body">
+        <h5 class="card-title fs-3">Confirm Book Borrow</h5>
+        <h6 class="card-subtitle mb-2 text-muted">Online Library Management System</h6>
+        <br>
+        <form asp-controller="Catalog" asp-action="BorrowBookPost" method="post">
+            <p><strong>Book name: </strong>@Model.Title</p>
+            <p><strong>Author: </strong>@Model.Author.FullName</p>
+            <p><strong>Publisher: </strong>@Model.Publisher.Name</p>
+            <button class="btn btn-primary">Borrow Book</button>
+            <input type="hidden" asp-for="Id" value="@Model.Id">
+            <a asp-controller="Catalog" asp-action="Index" class="btn btn-secondary">Go back</a>
+        </form>
+    </div>
 </div>

@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using OnlineLibrary.Core.Domain.Entities;
 using OnlineLibrary.Infrastructure.Persistence.Contexts;
+using OnlineLibrary.Presentation.Web.Extensions;
 using OnlineLibrary.Presentation.Web.Middleware;
 
 namespace OnlineLibrary.Presentation.Web.Controllers;
@@ -77,12 +78,34 @@ public class CatalogController : Controller
         {
             return RedirectToRoute(new { Controller = "Book", Action = "Index" });
         }
-        
-        Book book = await _dbContext.Set<Book>()
-            .Include(book => book.Publisher)
-            .Include(book => book.Author)
-            .FirstAsync(book => book.Id == id);
 
-        return View(nameof(Index));
+        int userId = HttpContext.Session.Get<User>("LoggedUser")!.Id;
+        BorrowedBook? borrowedBook = await _dbContext.Set<BorrowedBook>()
+            .Where(bb => bb.BookId == id || bb.UserId == userId)
+            .FirstOrDefaultAsync();
+
+        if (borrowedBook == null)
+        {
+            Book book = await _dbContext.Set<Book>()
+                .Include(book => book.Publisher)
+                .Include(book => book.Author)
+                .FirstAsync(book => book.Id == id);
+
+            await _dbContext.Set<BorrowedBook>().AddAsync(new BorrowedBook
+            {
+                BookId = book.Id,
+                UserId = userId,
+                BorrowDate = DateTime.Now
+            });
+            await _dbContext.SaveChangesAsync();
+        }
+        else
+        {
+            TempData[""] = "true";
+        }
+        
+
+        
+        return RedirectToAction(nameof(Index));
     }
 }

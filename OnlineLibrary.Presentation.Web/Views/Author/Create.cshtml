@@ -8,6 +8,14 @@
 <h2>@ViewData["Title"]</h2>
 
 <form asp-controller="Author" asp-action="Create" method="post">
+
+    @if ((string?)TempData[""] == "true")
+    {
+    <div class="alert alert-danger" role="alert">
+        Fill out all the fields!
+    </div>
+    }
+    
     <div class="card">
         <div class="input-group mb-3">
             <span class="input-group-text">Full Name</span>

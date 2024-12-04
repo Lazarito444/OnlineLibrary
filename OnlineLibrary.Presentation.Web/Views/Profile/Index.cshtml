@@ -7,7 +7,20 @@
 }
 
 <h2>@ViewData["Title"]</h2>
-<br><br>
+<br>
+@if ((string?)TempData[""] == "true")
+{
+<div class="alert alert-danger" role="alert">
+    Fill out at least all the fields except password.
+</div>
+}
+@if ((string?)TempData["emailTaken"] == "true")
+{
+<div class="alert alert-danger" role="alert">
+    That email is already taken.
+</div>
+}
+<br>
 
 <div class="card" style="width: 32rem;">
     <div class="card-body">

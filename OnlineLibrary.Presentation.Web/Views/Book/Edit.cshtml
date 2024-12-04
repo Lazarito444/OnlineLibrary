@@ -10,7 +10,14 @@
 
 <h2>@ViewData["Title"]</h2>
 
-<br><br>
+<br>
+@if ((string?)TempData[""] == "true")
+{
+<div class="alert alert-danger" role="alert">
+    Fill out all the fields!
+</div>
+}
+<br>
 
 <form asp-controller="Book" asp-action="Edit" method="post">
     <div class="card">
@@ -32,7 +39,6 @@
         </div>
         <div class="mb-3">
             <select asp-for="BookGenre" asp-items="Html.GetEnumSelectList<BookGenre>()">
-                <option selected="selected" value="">Please select</option>
             </select>
         </div>
         <div class="mb-3">

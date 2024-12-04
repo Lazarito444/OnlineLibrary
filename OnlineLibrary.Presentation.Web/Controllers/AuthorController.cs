@@ -47,6 +47,12 @@ public class AuthorController : Controller
             return RedirectToRoute(new { Controller = "Auth", Action = "Login"});
         }
         
+        if (string.IsNullOrWhiteSpace(author.FullName))
+        {
+            TempData[""] = "true";
+            return View();
+        }
+        
         _dbContext.Set<Author>().Add(author);
         await _dbContext.SaveChangesAsync();
         return RedirectToAction(nameof(Index));
@@ -96,9 +102,15 @@ public class AuthorController : Controller
         }
         
         Author currentAuthor = (await _dbContext.Set<Author>().FindAsync(author.Id))!;
+        
+        if (string.IsNullOrWhiteSpace(author.FullName))
+        {
+            TempData[""] = "true";
+            return View(currentAuthor);
+        }
+        
         _dbContext.Set<Author>().Entry(currentAuthor).CurrentValues.SetValues(author);    
         await _dbContext.SaveChangesAsync();
         return RedirectToAction(nameof(Index));
     }
-    
 }

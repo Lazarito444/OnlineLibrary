@@ -17,6 +17,18 @@
         <h5 class="card-title fs-3">Log In</h5>
         <h6 class="card-subtitle mb-2 text-muted">Online Library Management System</h6>
         <br>
+        @if ((string?) ViewData[""] == "true")
+        {
+            <div class="alert alert-danger" role="alert">
+                Wrong credentials
+            </div>
+        }
+        @if ((string?) TempData["sent"] == "true")
+        {
+            <div class="alert alert-success" role="alert">
+                Email sent
+            </div>
+        }
         <br>
         <form asp-controller="Auth" asp-action="Login" method="post">
             <div class="input-group mb-3">

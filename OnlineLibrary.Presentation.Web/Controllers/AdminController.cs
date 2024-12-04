@@ -47,6 +47,19 @@ public class AdminController : Controller
             return RedirectToRoute(new { Controller = "Auth", Action = "Login"});
         }
         
+        if (string.IsNullOrWhiteSpace(user.Email) || string.IsNullOrWhiteSpace(user.FullName) ||
+            user.DateOfBirth == null || string.IsNullOrWhiteSpace(user.Password))
+        {
+            TempData[""] = "true";
+            return View();
+        }
+        
+        if (await _dbContext.Set<User>().FirstOrDefaultAsync(u => u.Email == user.Email) != null)
+        {
+            TempData["emailTaken"] = "true";
+            return View();
+        }
+        
         user.Role = Roles.Admin;
         await _dbContext.Set<User>().AddAsync(user);
         await _dbContext.SaveChangesAsync();
@@ -70,9 +83,27 @@ public class AdminController : Controller
         {
             return RedirectToRoute(new { Controller = "Auth", Action = "Login"});
         }
-        
-        user.Role = Roles.Admin;
         User userToUpdate = (await _dbContext.Set<User>().FindAsync(user.Id))!;
+
+        if (string.IsNullOrWhiteSpace(user.Email) || string.IsNullOrWhiteSpace(user.FullName) ||
+            user.DateOfBirth == null)
+        {
+            TempData[""] = "true";
+            return View(userToUpdate);
+        }
+
+        if (user.Email != userToUpdate.Email && await _dbContext.Set<User>().FirstOrDefaultAsync(u => u.Email == user.Email) == null)
+        {
+            TempData["emailTaken"] = "true";
+            return View(userToUpdate);
+        }
+        user.Role = Roles.Admin;
+
+        if (user.Password == null)
+        {
+            user.Password = userToUpdate.Password;
+        }
+        
         _dbContext.Set<User>().Entry(userToUpdate).CurrentValues.SetValues(user);
         await _dbContext.SaveChangesAsync();
         return RedirectToAction(nameof(Index));

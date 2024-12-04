@@ -64,13 +64,17 @@ public class AuthController : Controller
         
         User? foundUser = await _dbContext.Set<User>().SingleOrDefaultAsync(u => u.Email == user.Email && u.Password == user.Password);
 
-        if (foundUser == null) return View(user);
+        if (foundUser == null)
+        {
+            ViewData[""] = "true";
+            return View(user);
+        }
 
         HttpContext.Session.Set("LoggedUser", foundUser);
         
         return RedirectToRoute(new { Controller = "Catalog", Action = "Index" });
     }
-
+    
     [HttpPost]
     public async Task<IActionResult> Register(User user)
     {
@@ -79,9 +83,19 @@ public class AuthController : Controller
             return RedirectToRoute(new { Controller = "Catalog", Action = "Index" });
         }
 
+        if (user.Password == null || user.Email == null || user.FullName == null || user.DateOfBirth == null)
+        {
+            TempData[""] = "true";
+            return View(user);
+        }
+        
         User? userWithSameEmail = await _dbContext.Set<User>().FirstOrDefaultAsync(u => user.Email == u.Email);
 
-        if (userWithSameEmail != null) return View(user);
+        if (userWithSameEmail != null)
+        {
+            TempData["emailTaken"] = "true";
+            return View(user);
+        }
         
         user.Role = Roles.User;
         await _dbContext.Set<User>().AddAsync(user);
@@ -148,8 +162,13 @@ public class AuthController : Controller
         
             return RedirectToAction(nameof(Login));
         }
-        if (user == null) return View();
-        
+
+        if (user == null)
+        {
+            ViewData[""] = "true";
+            return View();
+        }
+
         Guid token = Guid.NewGuid();
         await _dbContext.Set<ResetToken>().AddAsync(new ResetToken
         {
@@ -164,7 +183,8 @@ public class AuthController : Controller
             Subject = "Online Library | Password Reset",
             Message = $"<p>Hello! You've requested a password reset, <a href=\"http://{HttpContext.Request.Host}/Auth/ResetPassword?token={token}\">click here</a> to reset your password on our online library system</p>"
         });
-        
+
+        TempData["sent"] = "true";
         return RedirectToAction(nameof(Login));
     }
 
@@ -185,6 +205,12 @@ public class AuthController : Controller
         if (_validateUserSession.HasUser())
         {
             return RedirectToRoute(new { Controller = "Catalog", Action = "Index" });
+        }
+
+        if (string.IsNullOrWhiteSpace(newPassword))
+        {
+            TempData[""] = "true";
+            return View("ResetPassword");
         }
         
         ResetToken resetToken = _dbContext.Set<ResetToken>().FirstOrDefault(rt => rt.Token.ToString() == token)!;

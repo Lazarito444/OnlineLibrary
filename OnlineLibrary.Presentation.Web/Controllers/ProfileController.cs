@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using OnlineLibrary.Core.Domain.Entities;
 using OnlineLibrary.Infrastructure.Persistence.Contexts;
 using OnlineLibrary.Presentation.Web.Extensions;
@@ -37,6 +38,20 @@ public class ProfileController : Controller
         }
 
         User userToUpdate = (await _dbContext.Set<User>().FindAsync(user.Id))!;
+
+        if (string.IsNullOrWhiteSpace(user.Email) || string.IsNullOrWhiteSpace(user.FullName) ||
+            user.DateOfBirth == default)
+        {
+            TempData[""] = "true";
+            return View("Index", userToUpdate);
+        }
+
+        if (user.Email != userToUpdate.Email || 
+            await _dbContext.Set<User>().FirstOrDefaultAsync(u => u.Email == user.Email) == null)
+        {
+            TempData["emailTaken"] = "true";
+            return View("Index", userToUpdate);
+        }
         user.Role = userToUpdate.Role;
 
         if (user.Password == null)

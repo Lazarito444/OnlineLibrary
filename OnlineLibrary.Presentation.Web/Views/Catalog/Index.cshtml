@@ -7,7 +7,12 @@
 }
 
 <h2>@ViewData["Title"]</h2>
-
+@if ((string?)TempData[""] == "true")
+{
+<div class="alert alert-danger" role="alert">
+    You've borrowed a book or this book is already borrowed
+</div>
+}
 <br>
 <form method="post">
     <input type="text" name="query" class="mx-4 py-1 px-2 rounded-2"> <button class="btn btn-secondary" asp-controller="Catalog" asp-action="Index">Search</button>
