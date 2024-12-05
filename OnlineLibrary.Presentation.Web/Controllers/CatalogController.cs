@@ -1,9 +1,11 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using OnlineLibrary.Core.Domain.Entities;
+using OnlineLibrary.Core.Domain.Settings;
 using OnlineLibrary.Infrastructure.Persistence.Contexts;
 using OnlineLibrary.Presentation.Web.Extensions;
 using OnlineLibrary.Presentation.Web.Middleware;
+using OnlineLibrary.Presentation.Web.Services;
 
 namespace OnlineLibrary.Presentation.Web.Controllers;
 
@@ -11,11 +13,13 @@ public class CatalogController : Controller
 {
     private readonly AppDbContext _dbContext;
     private readonly ValidateUserSession _validateUserSession;
+    private readonly EmailService _emailService;
 
-    public CatalogController(AppDbContext dbContext, ValidateUserSession validateUserSession)
+    public CatalogController(AppDbContext dbContext, ValidateUserSession validateUserSession, EmailService emailService)
     {
         _dbContext = dbContext;
         _validateUserSession = validateUserSession;
+        _emailService = emailService;
     }
 
     public async Task<IActionResult> Index()
@@ -79,7 +83,8 @@ public class CatalogController : Controller
             return RedirectToRoute(new { Controller = "Book", Action = "Index" });
         }
 
-        int userId = HttpContext.Session.Get<User>("LoggedUser")!.Id;
+        User user = HttpContext.Session.Get<User>("LoggedUser")!;
+        int userId = user.Id;
         BorrowedBook? borrowedBook = await _dbContext.Set<BorrowedBook>()
             .Where(bb => (bb.BookId == id || bb.UserId == userId) && !bb.Returned)
             .FirstOrDefaultAsync();
@@ -105,6 +110,13 @@ public class CatalogController : Controller
                 BorrowDate = DateTime.Now
             });
             await _dbContext.SaveChangesAsync();
+            
+            _emailService.SendEmail(new EmailContent
+            {
+                To = user.Email,
+                Subject = "Borrowed Book | Online Library",
+                Message = $"Hey! You've borrowed the following book in our online library platform: {book.Title} by {book.Author.FullName}."
+            });
         }
         else
         {
