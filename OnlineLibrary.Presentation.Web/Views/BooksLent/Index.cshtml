@@ -1,0 +1,110 @@
+@using OnlineLibrary.Core.Domain.Entities
+@model List<BorrowedBook>
+@{
+    ViewData["Title"] = "Books Lent | Online Library";
+    Layout = "_Layout";
+}
+
+<h2>@ViewData["Title"]</h2>
+
+<br><br>
+
+@if (TempData[""] != null)
+{
+    <div class="alert alert-success" role="alert">
+        @TempData[""]
+    </div>
+}
+
+@if (Model.Count == 0)
+{
+    <h3>No books lent</h3>
+}
+else
+{
+    if (Model.Any(bb => !bb.Returned))
+    {
+        <h3>Books currently lent</h3>
+        <br>
+        <table class="table">
+            <thead>
+            <tr>
+                <th scope="col">Book</th>
+                <th scope="col">Borrowed by</th>
+                <th scope="col">Borrow Date</th>
+                <th scope="col">Maximum Return Date</th>
+                <th scope="col">Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            @foreach (BorrowedBook borrowedBook in Model)
+            {
+                if (!borrowedBook.Returned)
+                {
+                    <tr>
+                        <td>@borrowedBook.Book.Title</td>
+                        <td>@borrowedBook.User.FullName (@borrowedBook.User.Email)</td>
+                        <td>@borrowedBook.BorrowDate.Day/@borrowedBook.BorrowDate.Month/@borrowedBook.BorrowDate.Year</td>
+                        <td>@borrowedBook.MaxReturnDate.Day/@borrowedBook.MaxReturnDate.Month/@borrowedBook.MaxReturnDate.Year</td>
+                        <td>
+                            <form method="post" asp-controller="BooksLent" asp-action="SendEmail" asp-route-id="@borrowedBook.Id">
+                                <button class="btn btn-info">Send notification to e-mail</button>
+                            </form>
+                        </td>
+                    </tr>
+                }
+            }
+            </tbody>
+        </table>
+        
+        <br/>
+        <br/>
+        
+        <h3>History of lent books</h3>
+        <table class="table">
+            <thead>
+            <tr>
+                <th scope="col">Book</th>
+                <th scope="col">Borrowed by</th>
+                <th scope="col">Borrow Date</th>
+            </tr>
+            </thead>
+            <tbody>
+            @foreach (BorrowedBook borrowedBook in Model.Where(bb => bb.Returned))
+            {
+                <tr>
+                    <td>@borrowedBook.Book.Title</td>
+                    <td>@borrowedBook.User.FullName (@borrowedBook.User.Email)</td>
+                    <td>@borrowedBook.BorrowDate.Day/@borrowedBook.BorrowDate.Month/@borrowedBook.BorrowDate.Year</td>
+                </tr>
+            }
+            </tbody>
+        </table>
+    }
+    else
+    {
+        <br>
+        <h3>History of lent books</h3>
+        <table class="table">
+            <thead>
+            <tr>
+                <th scope="col">Book</th>
+                <th scope="col">Borrowed by</th>
+                <th scope="col">Borrow Date</th>
+            </tr>
+            </thead>
+            <tbody>
+            @foreach (BorrowedBook borrowedBook in Model)
+            {
+                <tr>
+                    <td>@borrowedBook.Book.Title</td>
+                    <td>@borrowedBook.User.FullName (@borrowedBook.User.Email)</td>
+                    <td>@borrowedBook.BorrowDate.Day/@borrowedBook.BorrowDate.Month/@borrowedBook.BorrowDate.Year</td>
+                </tr>
+            }
+            </tbody>
+        </table>
+    }
+}
+
+

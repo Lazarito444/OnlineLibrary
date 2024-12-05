@@ -2,7 +2,7 @@ using OnlineLibrary.Infrastructure.Persistence;
 using OnlineLibrary.Presentation.Web.Middleware;
 using OnlineLibrary.Presentation.Web.Services;
 
-var builder = WebApplication.CreateBuilder(args);
+WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddPersistenceLayer(builder.Configuration.GetConnectionString("DefaultConnection")!);
@@ -11,7 +11,7 @@ builder.Services.AddTransient<ValidateUserSession, ValidateUserSession>();
 builder.Services.AddTransient<EmailService, EmailService>();
 builder.Services.AddControllersWithViews();
 builder.Services.AddSession();
-var app = builder.Build();
+WebApplication app = builder.Build();
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
