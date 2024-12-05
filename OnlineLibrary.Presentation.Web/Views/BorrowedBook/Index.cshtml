@@ -1,0 +1,90 @@
+@using OnlineLibrary.Core.Domain.Entities
+@model List<BorrowedBook>
+
+@{
+    ViewData["Title"] = "Borrowed Books | Online Library";
+    Layout = "_Layout";
+}
+
+<h2>@ViewData["Title"]</h2>
+
+<br>
+<div class="container-fluid">
+@if (Model.Count == 0)
+{
+    <h3>You have not borrowed any books</h3>
+}
+else
+{
+        @if (!Model[0].Returned)
+    {
+        <h3>My borrowed book</h3>
+        <br>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">Title</th>
+                    <th scope="col">Author</th>
+                    <th scope="col">Borrowed at</th>
+                    <th scope="col">Maximum return day</th>
+                    <th scope="col">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>@Model[0].Book.Title</td>
+                    <td>@Model[0].Book.Author.FullName</td>
+                    <td>@Model[0].BorrowDate.Day/@Model[0].BorrowDate.Month/@Model[0].BorrowDate.Year</td>
+                    <td>@Model[0].MaxReturnDate.Day/@Model[0].MaxReturnDate.Month/@Model[0].MaxReturnDate.Year</td>
+                    <td><a asp-controller="BorrowedBook" asp-action="ReturnBook" asp-route-id="@Model[0].Id " class="btn btn-info">Return book</a></td>
+                </tr>
+            </tbody>
+        </table> 
+        <br><br><br>
+        <h3>History</h3>
+        <table class="table">
+            <thead>
+            <tr>
+                <th scope="col">Title</th>
+                <th scope="col">Author</th>
+                <th scope="col">Borrowed at</th>
+            </tr>
+            </thead>
+            <tbody>
+            @for (int i = 1; i < Model.Count; i++)
+            {
+                <tr>
+                    <td>@Model[i].Book.Title</td>
+                    <td>@Model[i].Book.Author.FullName</td>
+                    <td>@Model[i].BorrowDate.Day/@Model[i].BorrowDate.Month/@Model[i].BorrowDate.Year</td>
+                </tr>
+            }
+            </tbody>
+        </table>
+    }
+    else
+    {
+        <br><br><br>
+        <h3>History</h3>
+        <table class="table">
+            <thead>
+            <tr>
+                <th scope="col">Title</th>
+                <th scope="col">Author</th>
+                <th scope="col">Borrowed at</th>
+            </tr>
+            </thead>
+            <tbody>
+            @for (int i = 0; i < Model.Count; i++)
+            {
+                <tr>
+                    <td>@Model[i].Book.Title</td>
+                    <td>@Model[i].Book.Author.FullName</td>
+                    <td>@Model[i].BorrowDate.Day/@Model[i].BorrowDate.Month/@Model[i].BorrowDate.Year</td>
+                </tr>
+            }
+            </tbody>
+        </table>
+    }
+}
+</div>

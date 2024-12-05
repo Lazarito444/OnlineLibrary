@@ -81,16 +81,23 @@ public class CatalogController : Controller
 
         int userId = HttpContext.Session.Get<User>("LoggedUser")!.Id;
         BorrowedBook? borrowedBook = await _dbContext.Set<BorrowedBook>()
-            .Where(bb => bb.BookId == id || bb.UserId == userId)
+            .Where(bb => (bb.BookId == id || bb.UserId == userId) && !bb.Returned)
             .FirstOrDefaultAsync();
 
         if (borrowedBook == null)
         {
+            BorrowedBook? alreadyBookedByUser = await _dbContext.Set<BorrowedBook>().FirstOrDefaultAsync(bb => bb.BookId == id && bb.UserId == userId);
+
+            if (alreadyBookedByUser != null)
+            {
+                _dbContext.Set<BorrowedBook>().Remove(alreadyBookedByUser);
+            }
+            
             Book book = await _dbContext.Set<Book>()
                 .Include(book => book.Publisher)
                 .Include(book => book.Author)
                 .FirstAsync(book => book.Id == id);
-
+            
             await _dbContext.Set<BorrowedBook>().AddAsync(new BorrowedBook
             {
                 BookId = book.Id,

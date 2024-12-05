@@ -11,12 +11,12 @@ public class BorrowedBookConfiguration : IEntityTypeConfiguration<BorrowedBook>
         builder.ToTable("BorrowedBooks");
         builder.HasKey(bb => bb.Id);
 
-        builder.HasOne<Book>()
+        builder.HasOne<Book>(bb => bb.Book)
             .WithOne()
             .HasForeignKey<BorrowedBook>(bb => bb.BookId)
             .OnDelete(DeleteBehavior.Cascade);
 
-        builder.HasOne<User>()
+        builder.HasOne<User>(bb => bb.User)
             .WithOne()
             .HasForeignKey<BorrowedBook>(bb => bb.UserId)
             .OnDelete(DeleteBehavior.Cascade);

@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using OnlineLibrary.Infrastructure.Persistence.Contexts;
 
@@ -11,9 +12,11 @@ using OnlineLibrary.Infrastructure.Persistence.Contexts;
 namespace OnlineLibrary.Infrastructure.Persistence.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20241204231049_Change books-borrowedbooks relationship")]
+    partial class Changebooksborrowedbooksrelationship
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -96,6 +99,9 @@ namespace OnlineLibrary.Infrastructure.Persistence.Migrations
 
                     b.Property<DateTime>("BorrowDate")
                         .HasColumnType("datetime2");
+
+                    b.Property<bool>("Returned")
+                        .HasColumnType("bit");
 
                     b.Property<int>("UserId")
                         .HasColumnType("int");
@@ -213,17 +219,21 @@ namespace OnlineLibrary.Infrastructure.Persistence.Migrations
 
             modelBuilder.Entity("OnlineLibrary.Core.Domain.Entities.BorrowedBook", b =>
                 {
-                    b.HasOne("OnlineLibrary.Core.Domain.Entities.Book", null)
+                    b.HasOne("OnlineLibrary.Core.Domain.Entities.Book", "Book")
                         .WithOne()
                         .HasForeignKey("OnlineLibrary.Core.Domain.Entities.BorrowedBook", "BookId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("OnlineLibrary.Core.Domain.Entities.User", null)
+                    b.HasOne("OnlineLibrary.Core.Domain.Entities.User", "User")
                         .WithOne()
                         .HasForeignKey("OnlineLibrary.Core.Domain.Entities.BorrowedBook", "UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Book");
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("OnlineLibrary.Core.Domain.Entities.ResetToken", b =>

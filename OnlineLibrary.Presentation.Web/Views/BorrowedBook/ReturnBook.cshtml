@@ -1,0 +1,27 @@
+@using OnlineLibrary.Core.Domain.Entities
+@model BorrowedBook
+
+@{
+    ViewData["Title"] = "Return Book | OL";
+    Layout = "_Layout";
+}
+
+<h2>@ViewData["Title"]</h2>
+<br>
+<br>
+
+<div class="container-fluid d-flex justify-content-center">
+    <div class="card p-4">
+        <h3 class="card-title">Are you sure to return this book?</h3>
+        <p class="card-text">Title: @Model.Book.Title</p>
+        <p class="card-text">Author: @Model.Book.Author.FullName</p>
+
+        <br><br>
+        <form class="mx-2 mb-2" method="post" asp-controller="BorrowedBook" asp-action="ReturnBookPost">
+            <input type="hidden" value="@Model.Id" name="id">
+            <a asp-controller="BorrowedBook" asp-action="Index" class="btn btn-secondary">Go back</a>
+            <button class="btn btn-primary">Return book</button>
+        </form>
+    </div>
+</div>
+
